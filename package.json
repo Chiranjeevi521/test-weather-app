@@ -7,7 +7,9 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "pretest" : "webdriver-manager update",
+    "test" : "npm run pretest && protractor protractor.conf.js"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -38,10 +40,11 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.0.0",
-    "@types/jasmine": "^3.4.0",
+    "jasmine": "^3.4.0",
     "jasmine-reporters": "^2.3.2",
     "protractor": "^5.4.2",
     "typescript": "2.0.9",
+    "webdriver-manager": "^12.1.6",
     "winston": "^3.2.1"
   },
   "description": "Ionic 2 version of the Weather App sample",

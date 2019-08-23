@@ -1,16 +1,17 @@
 import { browser } from 'protractor'
+var j = require('jasmine');
 
-describe('core App', () => {
+j.describe('core App', () => {
 
     /// Create a driver for device
-    beforeAll(() => {
+    j.beforeAll(() => {
         // Configuration for Allure Reports
     });
 
-    beforeEach(() => {
+    j.beforeEach(() => {
     });
 
-    it('Sample Test Case', () => {
+    j.it('Sample Test Case', () => {
         browser.waitForAngularEnabled(true);
     });
 

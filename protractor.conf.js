@@ -16,7 +16,7 @@ exports.config = {
       marionette: true,
       acceptInsecureCerts: true
     },
-  framework: 'jasmine2',
+  framework: 'jasmine',
   onPrepare: function() {
     jasmine.getEnv().addReporter(junitReporter);
   },
