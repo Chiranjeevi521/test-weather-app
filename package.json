@@ -8,8 +8,8 @@
     "build": "ionic-app-scripts build",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "pretest" : "webdriver-manager update",
-    "test" : "npm run pretest && protractor protractor.conf.js"
+    "pretest": "webdriver-manager update",
+    "test": "npm run pretest && protractor protractor.conf.js"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
