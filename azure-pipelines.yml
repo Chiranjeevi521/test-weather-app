@@ -17,6 +17,9 @@ steps:
 
 - script: |
     npm install
+
+    npm install cordova --save-dev
+
     npm run clean
     npm run ionic:build
 
