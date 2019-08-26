@@ -19,4 +19,15 @@ steps:
     npm install
     npm run clean
     npm run ionic:build
+
+    cordova platform add android@7.1.1
+    
+    cordova plugin remove phonegap-plugin-barcodescanner
+    cordova plugin add phonegap-plugin-barcodescanner --force
+
+    cordova plugin remove cordova-plugin-file-opener2
+    cordova plugin add cordova-plugin-file-opener2 --force
+
+    cordova build android --debug
+
   displayName: 'npm install and build'
