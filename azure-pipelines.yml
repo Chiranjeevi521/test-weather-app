@@ -1,36 +1,27 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+# https://docs.microsoft.com/azure/devops/pipelines/languages/android
 
 trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'macOS-10.13'
 
 steps:
-- task: NodeTool@0
+- task: Gradle@2
   inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    workingDirectory: '$(system.defaultWorkingDirectory)/AndroidApps/MyApp'
+    gradleWrapperFile: '$(system.defaultWorkingDirectory)/AndroidApps/MyApp/gradlew'
+    gradleOptions: '-Xmx3072m'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'assembleDebug'
 
-- script: |
-    npm install
-
-    npm install cordova --save-dev
-
-    npm run clean
-    npm run ionic:build
-
-    cordova platform add android@7.1.1
-    
-    cordova plugin remove phonegap-plugin-barcodescanner
-    cordova plugin add phonegap-plugin-barcodescanner --force
-
-    cordova plugin remove cordova-plugin-file-opener2
-    cordova plugin add cordova-plugin-file-opener2 --force
-
-    cordova build android --debug
-
-  displayName: 'npm install and build'
+- task: AndroidSigning@2
+  inputs:
+    apkFiles: '**/*.apk'
+    jarsign: true
+    jarsignerKeystoreFile: 'pathToYourKeystoreFile'
+    jarsignerKeystorePassword: '$(jarsignerKeystorePassword)'
+    jarsignerKeystoreAlias: 'yourKeystoreAlias'
+    jarsignerKeyPassword: '$(jarsignerKeyPassword)'
+    zipalign: true
