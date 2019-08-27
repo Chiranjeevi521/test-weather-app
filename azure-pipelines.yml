@@ -8,7 +8,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'xcode-latest'
+  vmImage: 'macos-latest'
 
 steps:
 - task: NodeTool@0
