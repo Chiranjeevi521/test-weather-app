@@ -1,9 +1,5 @@
 # Xcode
-- task: CordovaBuild@1
-  inputs:
-    platform: 'android'
-    configuration: '$(Configuration)'
-    outputPattern: 'bin'
+
 # Build, test, and archive an Xcode workspace on macOS.
 # Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
@@ -23,3 +19,9 @@ steps:
     configuration: 'Release'
     xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
     xcodeVersion: 'default' # Options: 8, 9, 10, default, specifyPath
+
+- task: CordovaBuild@1
+  inputs:
+    platform: 'android'
+    configuration: '$(Configuration)'
+    outputPattern: 'bin'
