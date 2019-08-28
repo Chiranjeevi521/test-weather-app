@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.0.0",
+    "cordova-ios": "^5.0.1",
     "typescript": "2.0.9"
   },
   "description": "Ionic 2 version of the Weather App sample",
