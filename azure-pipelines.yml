@@ -33,6 +33,12 @@ steps:
     outputPattern: 'bin'
   displayName: 'Generation of Android App'
 
+- task: CopyPublishBuildArtifacts@1
+  inputs:
+    Contents: '*.apk'
+    ArtifactName: 'AndroidApp'
+    ArtifactType: 'FilePath'
+
 - task: CordovaBuild@1
   inputs:
     platform: 'ios'
