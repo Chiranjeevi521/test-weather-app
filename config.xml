@@ -96,4 +96,5 @@
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
   <plugin name="cordova-plugin-geolocation" version="2.4.0" />
   <plugin name="cordova-plugin-compat" version="1.1.1-dev" src="https://github.com/apache/cordova-plugin-compat" />
+  <engine name="ios" spec="5.0.1" />
 </widget>
