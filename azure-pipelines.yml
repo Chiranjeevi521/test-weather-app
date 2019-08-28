@@ -41,6 +41,11 @@ steps:
     CleanTargetFolder: true
   displayName: 'Copying Android App as Artifact'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: drop
+
 - task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'current'
@@ -49,17 +54,17 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)'
   displayName: 'Download Android Build Artifacts'
 
-- task: CordovaBuild@1
-  inputs:
-    platform: 'ios'
-    configuration: '$(Configuration)'
-    cordovaArgs: '-allowProvisioningUpdates'
-    outputPattern: 'bin'
-  displayName: 'Generation of IOS App'
+# - task: CordovaBuild@1
+#   inputs:
+#     platform: 'ios'
+#     configuration: '$(Configuration)'
+#     cordovaArgs: '-allowProvisioningUpdates'
+#     outputPattern: 'bin'
+#   displayName: 'Generation of IOS App'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Agent.BuildDirectory)'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Copying IOS App as Artifact'
+# - task: CopyFiles@2
+#   inputs:
+#     SourceFolder: '$(Agent.BuildDirectory)'
+#     Contents: '**'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+#   displayName: 'Copying IOS App as Artifact'
