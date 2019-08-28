@@ -30,5 +30,5 @@ steps:
   inputs:
     platform: 'ios'
     configuration: '$(Configuration)'
+    cordovaArgs: '-allowProvisioningUpdates'
     outputPattern: 'bin'
-    args: '-allowProvisioningUpdates'
