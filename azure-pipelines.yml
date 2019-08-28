@@ -33,11 +33,21 @@ steps:
     outputPattern: 'bin'
   displayName: 'Generation of Android App'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Agent.BuildDirectory)'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+    preserveTimestamp: true
+  displayName: 'Copying Android App as Artifact'
+
 - task: CopyPublishBuildArtifacts@1
   inputs:
     Contents: '*.apk'
     ArtifactName: 'AndroidApp'
     ArtifactType: 'FilePath'
+  displayName: 'Second way of copying Android App as Artifact'
 
 - task: CordovaBuild@1
   inputs:
