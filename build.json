@@ -1,0 +1,12 @@
+{
+    "ios": {
+      "debug": {
+        "developmentTeam": "chiranjeevi521@gmail.com"
+      },
+      "release": {
+        "developmentTeam": "chiranjeevi521@gmail.com",
+        "codeSignIdentity": "iPhone Developer",
+        "packageType": "ad-hoc"
+      }
+    }
+  }
