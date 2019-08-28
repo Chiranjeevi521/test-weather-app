@@ -1,4 +1,5 @@
 # Node.js with Angular
+    
 
 # Build a Node.js project that uses Angular.
 # Add steps that analyze code, save build artifacts, deploy, and more:
@@ -30,3 +31,4 @@ steps:
     platform: 'ios'
     configuration: '$(Configuration)'
     outputPattern: 'bin'
+    args: '-allowProvisioningUpdates'
