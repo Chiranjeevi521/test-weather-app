@@ -32,9 +32,11 @@ steps:
     configuration: '$(Configuration)'
     cordovaArgs: '-allowProvisioningUpdates'
     outputPattern: 'bin'
+  displayName: 'Generation of IOS App'
 
 - task: CordovaBuild@1
   inputs:
     platform: 'android'
     configuration: '$(Configuration)'
     outputPattern: 'bin'
+  displayName: 'Generation of Android App'
