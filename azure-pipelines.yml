@@ -21,3 +21,9 @@ steps:
     npm install
     npm run ionic:build
   displayName: 'npm install and build'
+
+- task: CordovaBuild@1
+  inputs:
+    platform: 'ios'
+    configuration: '$(Configuration)'
+    outputPattern: 'bin'
