@@ -32,3 +32,9 @@ steps:
     configuration: '$(Configuration)'
     cordovaArgs: '-allowProvisioningUpdates'
     outputPattern: 'bin'
+
+- task: CordovaBuild@1
+  inputs:
+    platform: 'android'
+    configuration: '$(Configuration)'
+    outputPattern: 'bin'
