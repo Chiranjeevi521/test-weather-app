@@ -41,6 +41,14 @@ steps:
     CleanTargetFolder: true
   displayName: 'Copying Android App as Artifact'
 
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'drop'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download Android Build Artifacts'
+
 - task: CordovaBuild@1
   inputs:
     platform: 'ios'
