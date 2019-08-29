@@ -51,17 +51,19 @@ steps:
     artifactName: 'outputs'
     artifactType: 'container'
 
-# - task: CordovaBuild@1
-#   inputs:
-#     platform: 'ios'
-#     configuration: '$(Configuration)'
-#     cordovaArgs: '-allowProvisioningUpdates'
-#     outputPattern: 'bin'
-#   displayName: 'Generation of IOS App'
+- task: CordovaBuild@1
+  inputs:
+    platform: 'ios'
+    configuration: '$(Configuration)'
+    p12: 'Certificates.p12'
+    p12pwd: 'secret'
+    provProfile: 'xcode10.mobileprovision'
+    outputPattern: 'bin'
 
-# - task: CopyFiles@2
-#   inputs:
-#     SourceFolder: '$(Agent.BuildDirectory)'
-#     Contents: '**'
-#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#   displayName: 'Copying IOS App as Artifact'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Agent.BuildDirectory)'
+    Contents: '**/*.ipa'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+  displayName: 'Copying IOS App as Artifact'
