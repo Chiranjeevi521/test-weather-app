@@ -15,6 +15,7 @@ pool:
   vmImage: 'macos-latest'
 
 steps:
+
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
@@ -26,6 +27,9 @@ steps:
     npm run ionic:build
   displayName: 'npm install and build'
 
+- script: sudo npm install -g appcenter-cli
+- script: appcenter login --token feebdff44f99eecaa582e06442080b2621793f1d
+
 - task: CordovaBuild@1
   inputs:
     platform: 'android'
@@ -36,7 +40,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)'
-    Contents: '**'
+    Contents: '**/*.apk'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
   displayName: 'Copying Android App as Artifact'
@@ -44,9 +48,8 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: AndroidApp
-
-
+    artifactName: 'outputs'
+    artifactType: 'container'
 
 # - task: CordovaBuild@1
 #   inputs:
