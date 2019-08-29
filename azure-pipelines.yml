@@ -56,7 +56,7 @@ steps:
     platform: 'ios'
     configuration: '$(Configuration)'
     p12: 'Certificates.p12'
-    p12pwd: 'secret'
+    p12pwd: $(P12password)
     provProfile: 'xcode10.mobileprovision'
     outputPattern: 'bin'
 
