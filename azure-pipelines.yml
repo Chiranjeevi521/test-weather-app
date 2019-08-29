@@ -36,7 +36,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)'
-    Contents: '**.apk'
+    Contents: '$(Agent.BuildDirectory)/platforms/android/app/build/outputs/apk/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
   displayName: 'Copying Android App as Artifact'
@@ -45,6 +45,8 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: AndroidApp
+
+
 
 # - task: CordovaBuild@1
 #   inputs:
