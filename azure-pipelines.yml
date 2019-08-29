@@ -36,7 +36,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)'
-    Contents: '$(Agent.BuildDirectory)/platforms/android/app/build/outputs/apk/**'
+    Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
   displayName: 'Copying Android App as Artifact'
