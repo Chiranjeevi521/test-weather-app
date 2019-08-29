@@ -27,8 +27,8 @@ steps:
     npm run ionic:build
   displayName: 'npm install and build'
 
-- script: sudo npm install -g appcenter-cli
-- script: appcenter login --token feebdff44f99eecaa582e06442080b2621793f1d
+# - script: sudo npm install -g appcenter-cli
+# - script: appcenter login --token feebdff44f99eecaa582e06442080b2621793f1d
 
 - task: CordovaBuild@1
   inputs:
