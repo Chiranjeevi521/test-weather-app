@@ -8,11 +8,6 @@
 trigger:
 - master
 
-variables:
-  scheme: ''
-  sdk: 'iphoneos'
-  configuration: 'Release'
-
 pool:
   vmImage: 'macos-latest'
 
@@ -75,8 +70,7 @@ steps:
 
 - script: |
     cordova platform add ios
-    cordova telemetry on
-    cordova build ios
+    cordova build ios --release
   displayName: 'Generating IOS App through command lines'
 
 
