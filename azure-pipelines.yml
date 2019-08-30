@@ -48,9 +48,22 @@ steps:
     cordova build android --debug
   displayName: 'Generating Android App through command lines'
 
-
 - script: |
     cordova platform add ios
+  displayName: 'Creating Xcode project'
+
+- task: InstallAppleProvisioningProfile@1
+  inputs:
+    provisioningProfileLocation: 'secureFiles'
+    provProfileSecureFile: '$(ProvisionCertificate.secureFilePath)'
+
+- task: InstallAppleCertificate@2
+  inputs:
+    certSecureFile: '$(P12Certificate.secureFilePath)'
+    certPwd: '$(P12password)'
+    keychain: 'temp'
+
+- script: |
     cordova build ios --debug
   displayName: 'Generating IOS App through command lines'
 
@@ -94,3 +107,8 @@ steps:
 #     p12pwd: $(P12password)
 #     provProfile: $(ProvisionCertificate.secureFilePath)
 #     outputPattern: 'bin'
+
+
+
+
+
