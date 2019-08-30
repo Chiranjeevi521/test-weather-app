@@ -30,6 +30,13 @@ steps:
 # - script: sudo npm install -g appcenter-cli
 # - script: appcenter login --token feebdff44f99eecaa582e06442080b2621793f1d
 
+- script: |
+    npm install -g cordova@8.1.2
+    cordova platform add android@7.1.1
+    cordova build android --debug
+  displayName: 'Generating Andrio App through command lines'
+
+
 - task: CordovaBuild@1
   inputs:
     platform: 'android'
