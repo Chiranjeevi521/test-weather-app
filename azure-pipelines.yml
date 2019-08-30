@@ -52,14 +52,13 @@ steps:
 #     cordova build android --debug
 #   displayName: 'Generating Android App through command lines'
 
-- task: Xcode@5
-  inputs:
-    sdk: '$(sdk)'
-    scheme: '$(scheme)'
-    configuration: '$(configuration)'
-    xcodeVersion: 'default'
-    exportPath: '$(agent.buildDirectory)/output/$(sdk)/$(configuration)'
-    packageApp: false
+# - task: CopyFiles@2
+#   inputs:
+#     SourceFolder: '$(Agent.BuildDirectory)'
+#     Contents: '**/*.apk'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+#     CleanTargetFolder: true
+#   displayName: 'Copying Android App as Artifact'
 
 - task: InstallAppleCertificate@2
   inputs:
@@ -74,31 +73,11 @@ steps:
     provProfileSecureFile: 'xcode10.mobileprovision'
   displayName: 'Installation Provisioning Profile'
 
-- task: Xcode@5
-  inputs:
-    actions: 'build'
-    scheme: ''
-    sdk: 'iphoneos'
-    configuration: 'Release'
-#    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
-    xcodeVersion: 'default' 
-    signingOption: 'default'
-    useXcpretty: false
+- script: |
+    cordova platform add ios
+    cordova build ios --debug
+  displayName: 'Generating IOS App through command lines'
 
-# - task: CordovaBuild@1
-#   inputs:
-#     platform: 'android'
-#     configuration: '$(Configuration)'
-#     outputPattern: 'bin'
-#   displayName: 'Generation of Android App'
-
-# - task: CopyFiles@2
-#   inputs:
-#     SourceFolder: '$(Agent.BuildDirectory)'
-#     Contents: '**/*.apk'
-#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#     CleanTargetFolder: true
-#   displayName: 'Copying Android App as Artifact'
 
 - task: CopyFiles@2
   inputs:
