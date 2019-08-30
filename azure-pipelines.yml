@@ -21,6 +21,18 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- task: DownloadSecureFile@1
+  name: P12Certificate
+  displayName: 'Download P12 Secure Certificate'
+  inputs:
+    secureFile: 'Certificates.p12'
+
+- task: DownloadSecureFile@1
+  name: ProvisionCertificate
+  displayName: 'Download Mobile Provision Certificate'
+  inputs:
+    secureFile: 'xcode10.mobileprovision'
+
 - script: |
     npm install -g @angular/cli
     npm install
@@ -34,15 +46,21 @@ steps:
     npm install -g cordova@8.1.2
     cordova platform add android@7.1.1
     cordova build android --debug
-  displayName: 'Generating Andrio App through command lines'
+  displayName: 'Generating Android App through command lines'
 
 
-- task: CordovaBuild@1
-  inputs:
-    platform: 'android'
-    configuration: '$(Configuration)'
-    outputPattern: 'bin'
-  displayName: 'Generation of Android App'
+- script: |
+    cordova platform add ios
+    cordova build ios --debug
+  displayName: 'Generating IOS App through command lines'
+
+
+# - task: CordovaBuild@1
+#   inputs:
+#     platform: 'android'
+#     configuration: '$(Configuration)'
+#     outputPattern: 'bin'
+#   displayName: 'Generation of Android App'
 
 - task: CopyFiles@2
   inputs:
@@ -52,33 +70,6 @@ steps:
     CleanTargetFolder: true
   displayName: 'Copying Android App as Artifact'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'outputs'
-    artifactType: 'container'
-
-- task: DownloadSecureFile@1
-  name: P12Certificate
-  displayName: 'Download P12 Secure Certificate'
-  inputs:
-    secureFile: 'Certificates.p12'
-
-
-- task: DownloadSecureFile@1
-  name: ProvisionCertificate
-  displayName: 'Download Mobile Provision Certificate'
-  inputs:
-    secureFile: 'xcode10.mobileprovision'
-
-- task: CordovaBuild@1
-  inputs:
-    platform: 'ios'
-    configuration: '$(Configuration)'
-    p12: $(P12Certificate.secureFilePath)
-    p12pwd: $(P12password)
-    provProfile: $(ProvisionCertificate.secureFilePath)
-    outputPattern: 'bin'
 
 - task: CopyFiles@2
   inputs:
@@ -87,3 +78,19 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
   displayName: 'Copying IOS App as Artifact'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'outputs'
+    artifactType: 'container'
+
+
+# - task: CordovaBuild@1
+#   inputs:
+#     platform: 'ios'
+#     configuration: '$(Configuration)'
+#     p12: $(P12Certificate.secureFilePath)
+#     p12pwd: $(P12password)
+#     provProfile: $(ProvisionCertificate.secureFilePath)
+#     outputPattern: 'bin'
