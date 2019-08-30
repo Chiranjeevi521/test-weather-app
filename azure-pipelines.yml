@@ -9,7 +9,9 @@ trigger:
 - master
 
 variables:
-  CordovaBuild : 8.1.2,
+  scheme: ''
+  sdk: 'iphoneos'
+  configuration: 'Release'
 
 pool:
   vmImage: 'macos-latest'
@@ -43,29 +45,45 @@ steps:
 
 - script: |
     npm install -g cordova@8.1.2
-    cordova platform add android@7.1.1
-    cordova build android --debug
-  displayName: 'Generating Android App through command lines'
+  displayName: 'Installation of cordova 8.1.2'
 
-- script: |
-    cordova platform add ios
-  displayName: 'Creating Xcode project'
+# - script: |
+#     cordova platform add android@7.1.1
+#     cordova build android --debug
+#   displayName: 'Generating Android App through command lines'
 
-- task: InstallAppleProvisioningProfile@1
+- task: Xcode@5
   inputs:
-    provisioningProfileLocation: 'secureFiles'
-    provProfileSecureFile: 'xcode10.mobileprovision'
+    sdk: '$(sdk)'
+    scheme: '$(scheme)'
+    configuration: '$(configuration)'
+    xcodeVersion: 'default' # Options: default, 10, 9, 8, specifyPath
+    exportPath: '$(agent.buildDirectory)/output/$(sdk)/$(configuration)'
+    packageApp: false
 
 - task: InstallAppleCertificate@2
   inputs:
     certSecureFile: 'Certificates.p12'
     certPwd: '$(P12password)'
     keychain: 'temp'
+  displayName: 'Installation of P12 Certificate'
 
-- script: |
-    cordova build ios --debug
-  displayName: 'Generating IOS App through command lines'
+- task: InstallAppleProvisioningProfile@1
+  inputs:
+    provisioningProfileLocation: 'secureFiles'
+    provProfileSecureFile: 'xcode10.mobileprovision'
+  displayName: 'Installation Provisioning Profile'
 
+- task: Xcode@5
+  inputs:
+    actions: 'build'
+    scheme: ''
+    sdk: 'iphoneos'
+    configuration: 'Release'
+    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
+    xcodeVersion: 'default' 
+    signingOption: 'default'
+    useXcpretty: false
 
 # - task: CordovaBuild@1
 #   inputs:
@@ -74,14 +92,13 @@ steps:
 #     outputPattern: 'bin'
 #   displayName: 'Generation of Android App'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Agent.BuildDirectory)'
-    Contents: '**/*.apk'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    CleanTargetFolder: true
-  displayName: 'Copying Android App as Artifact'
-
+# - task: CopyFiles@2
+#   inputs:
+#     SourceFolder: '$(Agent.BuildDirectory)'
+#     Contents: '**/*.apk'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+#     CleanTargetFolder: true
+#   displayName: 'Copying Android App as Artifact'
 
 - task: CopyFiles@2
   inputs:
@@ -106,8 +123,3 @@ steps:
 #     p12pwd: $(P12password)
 #     provProfile: $(ProvisionCertificate.secureFilePath)
 #     outputPattern: 'bin'
-
-
-
-
-
