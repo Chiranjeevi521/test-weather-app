@@ -76,7 +76,7 @@ steps:
 - script: |
     cordova platform add ios
     cordova telemetry on
-    cordova build ios --debug
+    cordova build ios
   displayName: 'Generating IOS App through command lines'
 
 
