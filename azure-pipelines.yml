@@ -54,11 +54,11 @@ steps:
 - task: InstallAppleProvisioningProfile@1
   inputs:
     provisioningProfileLocation: 'secureFiles'
-    provProfileSecureFile: '$(ProvisionCertificate)'
+    provProfileSecureFile: 'xcode10.mobileprovision'
 
 - task: InstallAppleCertificate@2
   inputs:
-    certSecureFile: '$(P12Certificate)'
+    certSecureFile: 'Certificates.p12'
     certPwd: '$(P12password)'
     keychain: 'temp'
 
