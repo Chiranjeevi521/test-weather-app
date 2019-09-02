@@ -70,7 +70,11 @@ steps:
 
 - script: |
     cordova platform add ios
-    cordova build ios -force_load --verbose
+  displayName: 'Adding IOS Platoform'
+
+
+- script: |
+    cordova build ios -force_load
   displayName: 'Generating IOS App through command lines'
 
 
