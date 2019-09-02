@@ -70,7 +70,7 @@ steps:
 
 - script: |
     cordova platform add ios
-    cordova build ios --release
+    cordova build ios --verbose
   displayName: 'Generating IOS App through command lines'
 
 
