@@ -47,6 +47,14 @@ steps:
     cordova build android --release
   displayName: 'Generating Android App through command lines'
 
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*.apk'
+    apksignerKeystoreFile: 'debug.keystore'
+    apksignerKeystorePassword: 'android'
+    apksignerKeystoreAlias: 'androiddebugkey'
+    apksignerKeyPassword: 'android'
+
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)'
@@ -85,14 +93,6 @@ steps:
 #     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 #     CleanTargetFolder: true
 #   displayName: 'Copying IOS App as Artifact'
-
-- task: AndroidSigning@3
-  inputs:
-    apkFiles: '**/*.apk'
-    apksignerKeystoreFile: 'debug.keystore'
-    apksignerKeystorePassword: 'android'
-    apksignerKeystoreAlias: 'androiddebugkey'
-    apksignerKeyPassword: 'android'
 
 - task: PublishBuildArtifacts@1
   inputs:
