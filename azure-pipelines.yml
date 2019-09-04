@@ -42,62 +42,60 @@ steps:
     npm install -g cordova@8.1.2
   displayName: 'Installation of cordova 8.1.2'
 
-# - script: |
-#     cordova platform add android@7.1.1
-#     cordova build android --debug
-#   displayName: 'Generating Android App through command lines'
-
-# - task: CopyFiles@2
-#   inputs:
-#     SourceFolder: '$(Agent.BuildDirectory)'
-#     Contents: '**/*.apk'
-#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#     CleanTargetFolder: true
-#   displayName: 'Copying Android App as Artifact'
-
-- task: InstallAppleCertificate@2
-  inputs:
-    certSecureFile: 'Certificates.p12'
-    certPwd: 'secret'
-    keychain: 'temp'
-  displayName: 'Installation of P12 Certificate'
-
-- task: InstallAppleProvisioningProfile@1
-  inputs:
-    provisioningProfileLocation: 'secureFiles'
-    provProfileSecureFile: 'xcode10.mobileprovision'
-  displayName: 'Installation Provisioning Profile'
-
 - script: |
-    cordova platform add ios
-  displayName: 'Adding IOS Platoform'
-
-
-- script: |
-    cordova build ios -force_load
-  displayName: 'Generating IOS App through command lines'
-
+    cordova platform add android@7.1.1
+    cordova build android --release
+  displayName: 'Generating Android App through command lines'
 
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Agent.BuildDirectory)'
-    Contents: '**/*.ipa'
+    Contents: '**/*.apk'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
-  displayName: 'Copying IOS App as Artifact'
+  displayName: 'Copying Android App as Artifact'
+
+# - task: InstallAppleCertificate@2
+#   inputs:
+#     certSecureFile: 'Certificates.p12'
+#     certPwd: 'secret'
+#     keychain: 'temp'
+#   displayName: 'Installation of P12 Certificate'
+
+# - task: InstallAppleProvisioningProfile@1
+#   inputs:
+#     provisioningProfileLocation: 'secureFiles'
+#     provProfileSecureFile: 'xcode10.mobileprovision'
+#   displayName: 'Installation Provisioning Profile'
+
+# - script: |
+#     cordova platform add ios
+#   displayName: 'Adding IOS Platoform'
+
+
+# - script: |
+#     cordova build ios -force_load
+#   displayName: 'Generating IOS App through command lines'
+
+
+# - task: CopyFiles@2
+#   inputs:
+#     SourceFolder: '$(Agent.BuildDirectory)'
+#     Contents: '**/*.ipa'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+#     CleanTargetFolder: true
+#   displayName: 'Copying IOS App as Artifact'
+
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: '**/*.apk'
+    apksignerKeystoreFile: 'debug.keystore'
+    apksignerKeystorePassword: 'android'
+    apksignerKeystoreAlias: 'androiddebugkey'
+    apksignerKeyPassword: 'android'
 
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'outputs'
     artifactType: 'container'
-
-
-# - task: CordovaBuild@1
-#   inputs:
-#     platform: 'ios'
-#     configuration: '$(Configuration)'
-#     p12: $(P12Certificate.secureFilePath)
-#     p12pwd: $(P12password)
-#     provProfile: $(ProvisionCertificate.secureFilePath)
-#     outputPattern: 'bin'
